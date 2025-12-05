@@ -24,7 +24,8 @@ Utilise l'IA pour prédire la meilleure culture selon la météo
 
 ## 📱 Captures d'écran
 
-![Intro](screenshots/intro.png)
+![Intro]
+<img src="assets/images/screenshots/intro.png" align="left" width="200px" alt="">
 ![Dashboard](screenshots/dashboard.png)
 ![Chatbot](screenshots/chatbot.png)
 
@@ -45,12 +46,12 @@ Voir [DOCUMENTATION.md](DOCUMENTATION.md)
 
 ## 👥 Équipe
 
-[Votre nom/équipe]
+Epi_Sonic
 
 ## 📝 Licence
 
 MIT License
 
-## 🌍 Nuit de l'Info 2024
+## 🌍 Nuit de l'Info 2025
 
 Projet réalisé dans le cadre du défi **MiniMind**.

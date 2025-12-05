@@ -55,12 +55,12 @@ MiniMind est une application pédagogique qui initie les jeunes à l'IA et au d�
 
 ## 4. Étapes de Réalisation
 
-### Phase 1 : Conception (2h)
+### Phase 1 : Conception 
 - Définition des modules
 - Maquettes UI/UX
 - Architecture de navigation
 
-### Phase 2 : Développement (8h)
+### Phase 2 : Développement 
 - Page Intro avec animations
 - Dashboard avec navigation
 - Module Chatbot NLP
@@ -68,12 +68,12 @@ MiniMind est une application pédagogique qui initie les jeunes à l'IA et au d�
 - Module Classification
 - Module Prédiction Agricole
 
-### Phase 3 : Design (3h)
+### Phase 3 : Design 
 - Système de couleurs écoresponsable
 - Animations de texte
 - Interface cohérente
 
-### Phase 4 : Tests (1h)
+### Phase 4 : Tests 
 - Tests utilisateur
 - Corrections de bugs
 - Optimisations
