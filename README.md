@@ -1,16 +1,56 @@
-# mini_mind_nuit_de_linfo
+# 🌿 MiniMind - IA & Développement Durable
 
-A new Flutter project.
+Application pédagogique pour découvrir l'intelligence artificielle tout en sensibilisant au développement durable.
 
-## Getting Started
+![MiniMind Banner](screenshots/banner.png)
 
-This project is a starting point for a Flutter application.
+## 🎯 Objectif
 
-A few resources to get you started if this is your first Flutter project:
+Permettre aux jeunes (collégiens, lycéens) de découvrir l'IA de manière simple et interactive, en lien avec les enjeux environnementaux.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## ✨ Fonctionnalités
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### 🤖 Chatbot NLP
+Discute avec une IA pour apprendre les gestes écoresponsables
+
+### 📷 Vision CNN
+Découvre comment l'IA reconnaît et classe les images
+
+### 🎯 Classification ML
+Entraîne un modèle à trier des données écologiques
+
+### 🌾 Prédiction Agricole
+Utilise l'IA pour prédire la meilleure culture selon la météo
+
+## 📱 Captures d'écran
+
+![Intro](screenshots/intro.png)
+![Dashboard](screenshots/dashboard.png)
+![Chatbot](screenshots/chatbot.png)
+
+## 🚀 Installation
+
+Voir [INSTALLATION.md](INSTALLATION.md)
+
+## 📚 Documentation
+
+Voir [DOCUMENTATION.md](DOCUMENTATION.md)
+
+## 🎨 Palette de couleurs
+
+- Background: `#F5F3E8`
+- Button: `#1E5F42`
+- Button Text: `#A7EAC4`
+- Highlights: `#2E8F61`
+
+## 👥 Équipe
+
+[Votre nom/équipe]
+
+## 📝 Licence
+
+MIT License
+
+## 🌍 Nuit de l'Info 2024
+
+Projet réalisé dans le cadre du défi **MiniMind**.

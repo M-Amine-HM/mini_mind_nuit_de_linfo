@@ -17,7 +17,7 @@ class _ChatbotPageState extends State<ChatbotPage> {
   bool isTyping = false;
 
   final List<Map<String, String>> suggestions = [
-    {"text": "Actions durables ?", "icon": "🏠"},
+    // {"text": "Actions durables ?", "icon": "🏠"},
     {"text": "Réduire l'énergie ?", "icon": "⚡"},
     {"text": "Le recyclage ?", "icon": "♻️"},
     {"text": "Comment l'IA marche ?", "icon": "🤖"},
