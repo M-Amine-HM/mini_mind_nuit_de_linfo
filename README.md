@@ -24,8 +24,7 @@ Utilise l'IA pour prédire la meilleure culture selon la météo
 
 ## 📱 Captures d'écran
 
-![Intro]
-<img src="assets/images/screenshots/intro.png" align="left" width="200px" alt="">
+<img src="assets\images\screenshots\intro.png" align="left" width="200px" alt="">
 ![Dashboard](screenshots/dashboard.png)
 ![Chatbot](screenshots/chatbot.png)
 
