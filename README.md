@@ -22,15 +22,6 @@ Entraîne un modèle à trier des données écologiques
 ### 🌾 Prédiction Agricole
 Utilise l'IA pour prédire la meilleure culture selon la météo
 
-## 📱 Captures d'écran
-
-<img src="assets\images\screenshots\intro.png" align="left" width="200px" alt="">
-![Dashboard](screenshots/dashboard.png)
-![Chatbot](screenshots/chatbot.png)
-
-## 🚀 Installation
-
-Voir [INSTALLATION.md](INSTALLATION.md)
 
 ## 📚 Documentation
 
