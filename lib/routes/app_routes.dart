@@ -17,11 +17,11 @@ class AppRoutes {
   static const agriculture = '/agriculture';
 
   static final routes = {
-    intro: (context) => const IntroPage(),
+    intro: (context) => IntroPage(),
     dashboard: (context) => const DashboardPage(),
     concept: (context) => const ConceptPage(),
     chatbot: (context) => const ChatbotPage(),
-    image: (context) => const ImagePage(),
+    image: (context) => const VisionComputerPage(),
     classification: (context) => const ClassificationPage(),
     agriculture: (context) => const AgriculturePage(),
   };
