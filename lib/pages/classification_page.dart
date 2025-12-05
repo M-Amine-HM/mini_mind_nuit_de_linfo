@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
+import '../config/colors/colors.dart';
 
 class MLClassificationPage extends StatefulWidget {
   const MLClassificationPage({super.key});
@@ -18,32 +19,27 @@ class _MLClassificationPageState extends State<MLClassificationPage>
   int correctAnswers = 0;
   int totalAttempts = 0;
 
-  // Données d'entraînement avec explications
   final List<Map<String, dynamic>> trainingData = [
     {
       "path": "lib/assets/images/leaf.jpg",
       "category": "Nature",
       "icon": "🌿",
-      "description": "Plantes et végétation - Bon pour l'environnement",
-      "impact": "Absorbe le CO2 et produit de l'oxygène",
+      "description": "Plantes et végétation",
     },
     {
       "path": "lib/assets/images/trash.jpg",
       "category": "Déchets",
       "icon": "♻️",
       "description": "Déchets recyclables",
-      "impact": "Doit être trié pour réduire la pollution",
     },
     {
       "path": "lib/assets/images/smoke.png",
       "category": "Pollution",
       "icon": "🌫️",
       "description": "Pollution industrielle",
-      "impact": "Contribue au réchauffement climatique",
     },
   ];
 
-  // Images de test pour quiz
   final List<Map<String, dynamic>> testImages = [
     {
       "path": "lib/assets/images/bottle.jpg",
@@ -61,15 +57,6 @@ class _MLClassificationPageState extends State<MLClassificationPage>
       "icon": "🌿",
     },
   ];
-
-  String classify(String path) {
-    for (var data in trainingData) {
-      if (path.contains(data["path"].split('/').last.split('.').first)) {
-        return "${data['category']} ${data['icon']}";
-      }
-    }
-    return "Catégorie inconnue";
-  }
 
   void skipIntro() {
     if (!mounted) return;
@@ -111,9 +98,11 @@ class _MLClassificationPageState extends State<MLClassificationPage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Classification ML Supervisé"),
-        backgroundColor: Colors.blue,
+        title: const Text("Classification ML 🎯"),
+        backgroundColor: AppColors.primary,
+        foregroundColor: AppColors.accent,
       ),
+      backgroundColor: AppColors.background,
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: showIntro
@@ -132,21 +121,18 @@ class _MLClassificationPageState extends State<MLClassificationPage>
         Expanded(
           child: Center(
             child: DefaultTextStyle(
-              style: const TextStyle(
-                fontSize: 18.0,
+              style: TextStyle(
+                fontSize: 20.0,
                 fontWeight: FontWeight.bold,
-                color: Colors.blue,
+                color: AppColors.primary,
               ),
+              textAlign: TextAlign.center,
               child: AnimatedTextKit(
                 animatedTexts: [
+                  TyperAnimatedText("Classification ML"),
+                  TyperAnimatedText("L'IA apprend à classer les images !"),
                   TyperAnimatedText(
-                    "Bienvenue dans l'apprentissage supervisé 📘 !",
-                  ),
-                  TyperAnimatedText(
-                    "Tu vas entraîner une IA à reconnaître différentes catégories.",
-                  ),
-                  TyperAnimatedText(
-                    "Ensuite, tu testeras ses connaissances ! 🎯",
+                    "Entraîne-la et teste ses connaissances 🚀",
                   ),
                 ],
                 isRepeatingAnimation: false,
@@ -156,8 +142,12 @@ class _MLClassificationPageState extends State<MLClassificationPage>
         ),
         ElevatedButton(
           onPressed: skipIntro,
-          style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
-          child: const Text("Commencer l'apprentissage"),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: AppColors.buttonColor,
+            foregroundColor: AppColors.buttonTextColor,
+            padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+          ),
+          child: const Text("Commencer", style: TextStyle(fontSize: 16)),
         ),
         const SizedBox(height: 24),
       ],
@@ -170,26 +160,28 @@ class _MLClassificationPageState extends State<MLClassificationPage>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Explication
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: Colors.blue.shade50,
+              color: AppColors.accent.withOpacity(0.2),
               borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: Colors.blue, width: 2),
+              border: Border.all(color: AppColors.primary, width: 2),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  "📘 Phase d'entraînement",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                Text(
+                  "📘 Entraînement",
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.primary,
+                  ),
                 ),
                 const SizedBox(height: 8),
-                const Text(
-                  "L'IA apprend en observant des exemples étiquetés. "
-                  "Clique sur chaque image pour voir ce que l'IA a appris !",
-                  style: TextStyle(fontSize: 14),
+                Text(
+                  "L'IA apprend en observant des exemples. Clique sur les images !",
+                  style: TextStyle(fontSize: 14, color: AppColors.primary),
                 ),
               ],
             ),
@@ -197,10 +189,13 @@ class _MLClassificationPageState extends State<MLClassificationPage>
 
           const SizedBox(height: 20),
 
-          // Dataset d'entraînement
-          const Text(
+          Text(
             "📊 Données d'entraînement :",
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: AppColors.primary,
+            ),
           ),
           const SizedBox(height: 10),
 
@@ -208,15 +203,14 @@ class _MLClassificationPageState extends State<MLClassificationPage>
 
           const SizedBox(height: 20),
 
-          // Bouton pour passer au test
           Center(
             child: ElevatedButton.icon(
               onPressed: startTesting,
               icon: const Icon(Icons.quiz),
-              label: const Text("Tester l'IA maintenant !"),
+              label: const Text("Tester l'IA !"),
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green,
-                foregroundColor: Colors.white,
+                backgroundColor: AppColors.secondary,
+                foregroundColor: AppColors.accent,
                 padding: const EdgeInsets.symmetric(
                   horizontal: 32,
                   vertical: 16,
@@ -229,7 +223,6 @@ class _MLClassificationPageState extends State<MLClassificationPage>
     );
   }
 
-  // Carte d'entraînement
   Widget buildTrainingCard(Map<String, dynamic> data) {
     bool isSelected = selectedImage == data["path"];
     return GestureDetector(
@@ -244,10 +237,10 @@ class _MLClassificationPageState extends State<MLClassificationPage>
         margin: const EdgeInsets.only(bottom: 12),
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: isSelected ? Colors.blue.shade50 : Colors.white,
+          color: isSelected ? AppColors.accent.withOpacity(0.3) : Colors.white,
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: isSelected ? Colors.blue : Colors.grey.shade300,
+            color: isSelected ? AppColors.primary : Colors.grey.shade300,
             width: isSelected ? 3 : 1,
           ),
         ),
@@ -270,33 +263,20 @@ class _MLClassificationPageState extends State<MLClassificationPage>
                 children: [
                   Text(
                     "${data['icon']} ${data['category']}",
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
+                      color: AppColors.primary,
                     ),
                   ),
                   const SizedBox(height: 4),
                   Text(
                     data["description"],
-                    style: TextStyle(fontSize: 13, color: Colors.grey.shade700),
-                  ),
-                  if (isSelected) ...[
-                    const SizedBox(height: 8),
-                    Container(
-                      padding: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        color: Colors.green.shade100,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Text(
-                        "💡 ${data['impact']}",
-                        style: const TextStyle(
-                          fontSize: 12,
-                          fontStyle: FontStyle.italic,
-                        ),
-                      ),
+                    style: TextStyle(
+                      fontSize: 13,
+                      color: AppColors.primary.withOpacity(0.7),
                     ),
-                  ],
+                  ),
                 ],
               ),
             ),
@@ -306,7 +286,7 @@ class _MLClassificationPageState extends State<MLClassificationPage>
     );
   }
 
-  // Phase 3: Test / Quiz
+  // Phase 3: Test
   Widget buildTestingPhase() {
     double accuracy = totalAttempts > 0
         ? (correctAnswers / totalAttempts) * 100
@@ -316,13 +296,12 @@ class _MLClassificationPageState extends State<MLClassificationPage>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Score
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: Colors.green.shade50,
+              color: AppColors.secondary.withOpacity(0.2),
               borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: Colors.green, width: 2),
+              border: Border.all(color: AppColors.secondary, width: 2),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -330,17 +309,18 @@ class _MLClassificationPageState extends State<MLClassificationPage>
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      "🎯 Phase de test",
+                    Text(
+                      "🎯 Test",
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
+                        color: AppColors.primary,
                       ),
                     ),
                     const SizedBox(height: 4),
                     Text(
                       "Score: $correctAnswers/$totalAttempts",
-                      style: const TextStyle(fontSize: 16),
+                      style: TextStyle(fontSize: 16, color: AppColors.primary),
                     ),
                   ],
                 ),
@@ -348,12 +328,12 @@ class _MLClassificationPageState extends State<MLClassificationPage>
                   CircleAvatar(
                     radius: 30,
                     backgroundColor: accuracy >= 70
-                        ? Colors.green
+                        ? AppColors.secondary
                         : Colors.orange,
                     child: Text(
                       "${accuracy.toInt()}%",
-                      style: const TextStyle(
-                        color: Colors.white,
+                      style: TextStyle(
+                        color: AppColors.accent,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -364,18 +344,20 @@ class _MLClassificationPageState extends State<MLClassificationPage>
 
           const SizedBox(height: 20),
 
-          const Text(
-            "Aide l'IA à classifier ces nouvelles images :",
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+          Text(
+            "Classe ces nouvelles images :",
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+              color: AppColors.primary,
+            ),
           ),
           const SizedBox(height: 10),
 
-          // Quiz images
           ...testImages.map((testData) => buildQuizCard(testData)).toList(),
 
           const SizedBox(height: 20),
 
-          // Boutons
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -383,7 +365,10 @@ class _MLClassificationPageState extends State<MLClassificationPage>
                 onPressed: resetQuiz,
                 icon: const Icon(Icons.refresh),
                 label: const Text("Réentraîner"),
-                style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.primary,
+                  foregroundColor: AppColors.accent,
+                ),
               ),
               if (totalAttempts >= testImages.length)
                 ElevatedButton.icon(
@@ -391,11 +376,11 @@ class _MLClassificationPageState extends State<MLClassificationPage>
                     showDialog(
                       context: context,
                       builder: (context) => AlertDialog(
-                        title: const Text("🎉 Résultat final"),
+                        title: const Text("🎉 Résultat"),
                         content: Text(
                           "Score: $correctAnswers/${testImages.length}\n"
                           "Précision: ${accuracy.toInt()}%\n\n"
-                          "${accuracy >= 70 ? "Excellent travail ! 🌟" : "Continue à t'entraîner ! 💪"}",
+                          "${accuracy >= 70 ? "Excellent ! 🌟" : "Continue ! 💪"}",
                         ),
                         actions: [
                           TextButton(
@@ -407,9 +392,10 @@ class _MLClassificationPageState extends State<MLClassificationPage>
                     );
                   },
                   icon: const Icon(Icons.emoji_events),
-                  label: const Text("Voir résultat"),
+                  label: const Text("Résultat"),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.orange,
+                    backgroundColor: AppColors.secondary,
+                    foregroundColor: AppColors.accent,
                   ),
                 ),
             ],
@@ -419,7 +405,6 @@ class _MLClassificationPageState extends State<MLClassificationPage>
     );
   }
 
-  // Carte de quiz
   Widget buildQuizCard(Map<String, dynamic> testData) {
     return Card(
       margin: const EdgeInsets.only(bottom: 16),
@@ -438,9 +423,12 @@ class _MLClassificationPageState extends State<MLClassificationPage>
               ),
             ),
             const SizedBox(height: 12),
-            const Text(
-              "Cette image appartient à quelle catégorie ?",
-              style: TextStyle(fontWeight: FontWeight.bold),
+            Text(
+              "Quelle catégorie ?",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: AppColors.primary,
+              ),
             ),
             const SizedBox(height: 8),
             Wrap(
@@ -450,7 +438,8 @@ class _MLClassificationPageState extends State<MLClassificationPage>
                   onPressed: () =>
                       checkAnswer("Nature", testData["correctCategory"]),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
+                    backgroundColor: AppColors.secondary,
+                    foregroundColor: AppColors.accent,
                   ),
                   child: const Text("🌿 Nature"),
                 ),
@@ -458,14 +447,18 @@ class _MLClassificationPageState extends State<MLClassificationPage>
                   onPressed: () =>
                       checkAnswer("Déchets", testData["correctCategory"]),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.orange,
+                    backgroundColor: AppColors.highlightColor,
+                    foregroundColor: AppColors.accent,
                   ),
                   child: const Text("♻️ Déchets"),
                 ),
                 ElevatedButton(
                   onPressed: () =>
                       checkAnswer("Pollution", testData["correctCategory"]),
-                  style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.primary,
+                    foregroundColor: AppColors.accent,
+                  ),
                   child: const Text("🌫️ Pollution"),
                 ),
               ],

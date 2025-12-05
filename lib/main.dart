@@ -1,11 +1,44 @@
 import 'package:flutter/material.dart';
-import 'app.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'config/colors/colors.dart';
+import 'routes/app_routes.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  //await dotenv.load(fileName: ".env"); // clé API si nécessaire
-  //dotenv.env['API_KEY'];
+void main() {
+  runApp(const MyApp());
+}
 
-  runApp(const App());
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'MiniMind',
+      theme: ThemeData(
+        primaryColor: AppColors.primary,
+        scaffoldBackgroundColor: AppColors.background,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: AppColors.primary,
+          primary: AppColors.primary,
+          secondary: AppColors.secondary,
+          background: AppColors.background,
+        ),
+        appBarTheme: AppBarTheme(
+          backgroundColor: AppColors.primary,
+          foregroundColor: AppColors.accent,
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: AppColors.buttonColor,
+            foregroundColor: AppColors.buttonTextColor,
+          ),
+        ),
+        floatingActionButtonTheme: FloatingActionButtonThemeData(
+          backgroundColor: AppColors.primary,
+          foregroundColor: AppColors.accent,
+        ),
+      ),
+      initialRoute: AppRoutes.intro,
+      routes: AppRoutes.routes,
+    );
+  }
 }

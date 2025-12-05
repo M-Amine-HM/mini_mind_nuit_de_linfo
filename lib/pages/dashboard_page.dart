@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../widgets/concept_card.dart';
 import '../routes/app_routes.dart';
+import '../config/colors/colors.dart';
 
 class DashboardPage extends StatelessWidget {
   const DashboardPage({super.key});
@@ -12,37 +13,39 @@ class DashboardPage extends StatelessWidget {
         "title": "Chatbot",
         "route": AppRoutes.chatbot,
         "icon": Icons.chat_bubble,
-        "color": Colors.blue,
+        "color": AppColors.primary,
         "description": "Discute avec une IA écologique",
       },
       {
         "title": "Vision CNN",
         "route": AppRoutes.image,
         "icon": Icons.image,
-        "color": Colors.green,
+        "color": AppColors.secondary,
         "description": "Reconnaît et classe les images",
       },
       {
         "title": "Classification",
         "route": AppRoutes.classification,
         "icon": Icons.category,
-        "color": Colors.purple,
+        "color": AppColors.highlightColor,
         "description": "Apprends à trier les données",
       },
       {
         "title": "Prédiction",
         "route": AppRoutes.agriculture,
         "icon": Icons.agriculture,
-        "color": Colors.orange,
+        "color": AppColors.primary,
         "description": "Prédit la meilleure culture",
       },
     ];
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("MiniMind 🌿"),
-        backgroundColor: Colors.green,
+        title: const Text("MiniMind"),
+        backgroundColor: AppColors.primary,
+        foregroundColor: AppColors.accent,
       ),
+      backgroundColor: AppColors.background,
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -52,18 +55,18 @@ class DashboardPage extends StatelessWidget {
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [Colors.green.shade300, Colors.blue.shade300],
+                  colors: [AppColors.secondary, AppColors.primary],
                 ),
                 borderRadius: BorderRadius.circular(16),
               ),
-              child: const Column(
+              child: Column(
                 children: [
-                  Icon(Icons.eco, size: 50, color: Colors.white),
-                  SizedBox(height: 10),
+                  Icon(Icons.eco, size: 50, color: AppColors.accent),
+                  const SizedBox(height: 10),
                   Text(
                     "IA & Développement Durable",
                     style: TextStyle(
-                      color: Colors.white,
+                      color: AppColors.accent,
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
@@ -75,9 +78,13 @@ class DashboardPage extends StatelessWidget {
             const SizedBox(height: 20),
 
             // Titre
-            const Text(
-              "Choisis un module 👇",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            Text(
+              "Choisis un module",
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: AppColors.primary,
+              ),
             ),
 
             const SizedBox(height: 16),
@@ -99,7 +106,7 @@ class DashboardPage extends StatelessWidget {
                     },
                     child: Container(
                       decoration: BoxDecoration(
-                        color: (concept["color"] as Color).withOpacity(0.2),
+                        color: (concept["color"] as Color).withOpacity(0.15),
                         borderRadius: BorderRadius.circular(16),
                         border: Border.all(
                           color: concept["color"] as Color,
@@ -117,9 +124,10 @@ class DashboardPage extends StatelessWidget {
                           const SizedBox(height: 12),
                           Text(
                             concept["title"] as String,
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
+                              color: AppColors.primary,
                             ),
                           ),
                           const SizedBox(height: 8),
@@ -127,7 +135,10 @@ class DashboardPage extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(horizontal: 8),
                             child: Text(
                               concept["description"] as String,
-                              style: const TextStyle(fontSize: 12),
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: AppColors.primary.withOpacity(0.7),
+                              ),
                               textAlign: TextAlign.center,
                               maxLines: 2,
                             ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
+import '../config/colors/colors.dart';
 
 class ChatbotPage extends StatefulWidget {
   const ChatbotPage({super.key});
@@ -16,95 +17,43 @@ class _ChatbotPageState extends State<ChatbotPage> {
   bool isTyping = false;
 
   final List<Map<String, String>> suggestions = [
-    {"text": "Quelles actions durables à la maison ?", "icon": "🏠"},
-    {"text": "Comment réduire l'énergie ?", "icon": "⚡"},
-    {"text": "Qu'est-ce que le recyclage ?", "icon": "♻️"},
-    {"text": "Comment l'IA fonctionne ?", "icon": "🤖"},
+    {"text": "Actions durables ?", "icon": "🏠"},
+    {"text": "Réduire l'énergie ?", "icon": "⚡"},
+    {"text": "Le recyclage ?", "icon": "♻️"},
+    {"text": "Comment l'IA marche ?", "icon": "🤖"},
   ];
 
-  // Base de connaissances du chatbot
   final Map<String, String> knowledgeBase = {
-    // Actions durables
     "maison":
         "🏠 Actions durables à la maison :\n\n"
-        "• Éteindre les lumières en sortant\n"
+        "• Éteindre les lumières\n"
         "• Utiliser des ampoules LED\n"
-        "• Débrancher les appareils non utilisés\n"
-        "• Trier ses déchets (plastique, verre, papier)\n"
-        "• Composter les déchets organiques\n"
-        "• Réduire la consommation d'eau\n\n"
-        "💡 Chaque petit geste compte pour la planète !",
+        "• Trier les déchets\n"
+        "• Composter\n"
+        "• Réduire l'eau\n\n"
+        "💡 Chaque geste compte !",
 
     "énergie":
-        "⚡ Réduire la consommation d'énergie :\n\n"
-        "• Utiliser des appareils économes (A+++)\n"
-        "• Isoler correctement son logement\n"
-        "• Baisser le chauffage de 1°C (7% d'économie !)\n"
-        "• Privilégier les énergies renouvelables\n"
-        "• Éteindre les veilles (TV, ordinateur)\n"
-        "• Utiliser des multiprises avec interrupteur\n\n"
-        "🌍 Tu peux économiser jusqu'à 30% d'énergie !",
+        "⚡ Réduire l'énergie :\n\n"
+        "• Appareils économes (A+++)\n"
+        "• Baisser le chauffage de 1°C\n"
+        "• Éteindre les veilles\n\n"
+        "🌍 Économie jusqu'à 30% !",
 
     "recyclage":
-        "♻️ Le recyclage expliqué :\n\n"
-        "Le recyclage transforme les déchets en nouvelles ressources !\n\n"
+        "♻️ Le recyclage :\n\n"
         "📦 Carton/Papier : Poubelle jaune\n"
         "🍾 Verre : Conteneur spécial\n"
-        "🥤 Plastique : Poubelle jaune (bouteilles, flacons)\n"
-        "🔋 Piles/Électronique : Points de collecte\n"
-        "🍂 Déchets organiques : Compost\n\n"
-        "💚 1 tonne de plastique recyclé = 830L de pétrole économisé !",
+        "🥤 Plastique : Poubelle jaune\n\n"
+        "💚 1 tonne recyclée = 830L pétrole économisé !",
 
     "ia":
         "🤖 Comment fonctionne l'IA ?\n\n"
-        "L'Intelligence Artificielle apprend comme un humain !\n\n"
         "1️⃣ Collecte de données\n"
-        "2️⃣ Apprentissage sur des exemples\n"
+        "2️⃣ Apprentissage\n"
         "3️⃣ Reconnaissance de patterns\n"
-        "4️⃣ Prédiction et décision\n\n"
-        "📚 Types d'apprentissage :\n"
-        "• Supervisé : avec exemples étiquetés\n"
-        "• Non supervisé : trouve seul les patterns\n"
-        "• Par renforcement : apprend par essai-erreur\n\n"
-        "🎯 Utilisé pour : reconnaître images, traduire, prédire !",
-
-    "pollution":
-        "🌫️ Lutter contre la pollution :\n\n"
-        "• Privilégier les transports en commun\n"
-        "• Utiliser le vélo ou marcher\n"
-        "• Covoiturer quand c'est possible\n"
-        "• Éviter les produits sur-emballés\n"
-        "• Acheter local et de saison\n"
-        "• Réduire la consommation de viande\n\n"
-        "🌱 La pollution de l'air cause 7M de décès/an dans le monde.",
-
-    "eau":
-        "💧 Économiser l'eau :\n\n"
-        "• Prendre des douches courtes (5 min max)\n"
-        "• Fermer le robinet en se brossant les dents\n"
-        "• Installer des réducteurs de débit\n"
-        "• Réparer les fuites rapidement\n"
-        "• Récupérer l'eau de pluie\n"
-        "• Utiliser lave-vaisselle/linge en mode éco\n\n"
-        "💦 Une fuite peut gaspiller 120L d'eau par jour !",
-
-    "plastique":
-        "🥤 Réduire le plastique :\n\n"
-        "• Utiliser des sacs réutilisables\n"
-        "• Bouteille en inox au lieu de plastique\n"
-        "• Acheter en vrac quand possible\n"
-        "• Éviter les pailles et couverts jetables\n"
-        "• Privilégier les emballages recyclables\n"
-        "• Dire non aux sacs plastiques\n\n"
-        "🌊 8M de tonnes de plastique finissent dans les océans chaque année !",
-
-    "compost":
-        "🍂 Le compostage :\n\n"
-        "Le compost transforme les déchets organiques en engrais naturel !\n\n"
-        "✅ Accepté : épluchures, marc de café, coquilles d'œuf, feuilles\n"
-        "❌ Refusé : viande, poisson, produits laitiers, huile\n\n"
-        "📊 Le compost réduit de 30% le volume des poubelles !\n"
-        "🌱 Il enrichit le sol et réduit l'usage d'engrais chimiques.",
+        "4️⃣ Prédiction\n\n"
+        "🎯 Utilisé pour : images, traduction, prédictions !",
   };
 
   void skipIntro() {
@@ -112,7 +61,6 @@ class _ChatbotPageState extends State<ChatbotPage> {
     setState(() {
       showIntro = false;
     });
-    // Message de bienvenue
     Future.delayed(const Duration(milliseconds: 500), () {
       if (!mounted) return;
       setState(() {
@@ -120,12 +68,11 @@ class _ChatbotPageState extends State<ChatbotPage> {
           "sender": "bot",
           "text":
               "👋 Salut ! Je suis ton assistant écologique.\n\n"
-              "Je peux t'aider sur :\n"
               "🏠 Actions durables\n"
               "⚡ Économie d'énergie\n"
               "♻️ Recyclage\n"
               "🤖 Intelligence Artificielle\n\n"
-              "Pose-moi une question ou clique sur une suggestion !",
+              "Pose-moi une question !",
           "timestamp": DateTime.now(),
         });
       });
@@ -147,7 +94,6 @@ class _ChatbotPageState extends State<ChatbotPage> {
 
     _scrollToBottom();
 
-    // Simulation de délai de réponse
     Future.delayed(const Duration(seconds: 1), () {
       if (!mounted) return;
       String response = generateResponse(text);
@@ -168,39 +114,21 @@ class _ChatbotPageState extends State<ChatbotPage> {
   String generateResponse(String input) {
     String lowerInput = input.toLowerCase();
 
-    // Recherche dans la base de connaissances
     for (var entry in knowledgeBase.entries) {
       if (lowerInput.contains(entry.key)) {
         return entry.value;
       }
     }
 
-    // Détection de mots-clés supplémentaires
     if (lowerInput.contains("bonjour") || lowerInput.contains("salut")) {
-      return "👋 Salut ! Comment puis-je t'aider aujourd'hui ?";
+      return "👋 Salut ! Comment puis-je t'aider ?";
     }
     if (lowerInput.contains("merci")) {
-      return "😊 Avec plaisir ! N'hésite pas si tu as d'autres questions.";
-    }
-    if (lowerInput.contains("climat") || lowerInput.contains("réchauffement")) {
-      return "🌡️ Le réchauffement climatique est causé par les émissions de CO2.\n\n"
-          "Tu peux agir en :\n"
-          "• Réduisant ta consommation d'énergie\n"
-          "• Utilisant les transports verts\n"
-          "• Consommant local et de saison\n"
-          "• Plantant des arbres 🌳";
-    }
-    if (lowerInput.contains("déchets")) {
-      return knowledgeBase["recyclage"]!;
+      return "😊 Avec plaisir !";
     }
 
-    // Réponse par défaut
     return "🤔 Je n'ai pas encore appris ça !\n\n"
-        "Essaie de me demander sur :\n"
-        "• Les actions durables\n"
-        "• L'économie d'énergie\n"
-        "• Le recyclage\n"
-        "• L'intelligence artificielle";
+        "Essaie : actions durables, énergie, recyclage, IA";
   }
 
   void _scrollToBottom() {
@@ -226,9 +154,11 @@ class _ChatbotPageState extends State<ChatbotPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Chatbot Durable 🌿"),
-        backgroundColor: Colors.green,
+        title: const Text("Chatbot Durable"),
+        backgroundColor: AppColors.primary,
+        foregroundColor: AppColors.accent,
       ),
+      backgroundColor: AppColors.background,
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: showIntro
@@ -237,21 +167,18 @@ class _ChatbotPageState extends State<ChatbotPage> {
                   Expanded(
                     child: Center(
                       child: DefaultTextStyle(
-                        style: const TextStyle(
-                          fontSize: 18.0,
+                        style: TextStyle(
+                          fontSize: 20.0,
                           fontWeight: FontWeight.bold,
-                          color: Colors.green,
+                          color: AppColors.primary,
                         ),
+                        textAlign: TextAlign.center,
                         child: AnimatedTextKit(
                           animatedTexts: [
+                            TyperAnimatedText("Chatbot Durable"),
+                            TyperAnimatedText("Discute avec l'IA écologique !"),
                             TyperAnimatedText(
-                              "Bienvenue dans le Chatbot Durable 🌿 !",
-                            ),
-                            TyperAnimatedText(
-                              "Je vais t'aider à découvrir des gestes écoresponsables.",
-                            ),
-                            TyperAnimatedText(
-                              "J'utilise l'IA et le NLP pour comprendre tes questions !",
+                              "J'utilise le NLP pour te comprendre",
                             ),
                           ],
                           isRepeatingAnimation: false,
@@ -262,16 +189,23 @@ class _ChatbotPageState extends State<ChatbotPage> {
                   ElevatedButton(
                     onPressed: skipIntro,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green,
+                      backgroundColor: AppColors.buttonColor,
+                      foregroundColor: AppColors.buttonTextColor,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 32,
+                        vertical: 16,
+                      ),
                     ),
-                    child: const Text("Commencer la discussion"),
+                    child: const Text(
+                      "Commencer",
+                      style: TextStyle(fontSize: 16),
+                    ),
                   ),
                   const SizedBox(height: 24),
                 ],
               )
             : Column(
                 children: [
-                  // Messages
                   Expanded(
                     child: messages.isEmpty
                         ? buildSuggestionsView()
@@ -289,7 +223,6 @@ class _ChatbotPageState extends State<ChatbotPage> {
                           ),
                   ),
                   const SizedBox(height: 8),
-                  // Suggestions rapides si pas de messages
                   if (messages.isNotEmpty)
                     Container(
                       height: 50,
@@ -308,13 +241,14 @@ class _ChatbotPageState extends State<ChatbotPage> {
                               ),
                               label: Text(suggestion["text"]!),
                               onPressed: () => sendMessage(suggestion["text"]!),
-                              backgroundColor: Colors.green.shade50,
+                              backgroundColor: AppColors.accent.withOpacity(
+                                0.3,
+                              ),
                             ),
                           );
                         },
                       ),
                     ),
-                  // TextField en bas
                   TextField(
                     controller: _controller,
                     decoration: InputDecoration(
@@ -322,14 +256,14 @@ class _ChatbotPageState extends State<ChatbotPage> {
                       prefixIcon: const Icon(Icons.chat_bubble_outline),
                       suffixIcon: IconButton(
                         icon: const Icon(Icons.send),
-                        color: Colors.green,
+                        color: AppColors.primary,
                         onPressed: () => sendMessage(_controller.text),
                       ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(25),
                       ),
                       filled: true,
-                      fillColor: Colors.grey.shade100,
+                      fillColor: Colors.white,
                     ),
                     onSubmitted: sendMessage,
                   ),
@@ -345,11 +279,15 @@ class _ChatbotPageState extends State<ChatbotPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(Icons.chat, size: 80, color: Colors.green),
+            Icon(Icons.chat, size: 80, color: AppColors.primary),
             const SizedBox(height: 20),
-            const Text(
+            Text(
               "💬 Pose-moi une question !",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: AppColors.primary,
+              ),
             ),
             const SizedBox(height: 30),
             ...suggestions.map(
@@ -358,8 +296,8 @@ class _ChatbotPageState extends State<ChatbotPage> {
                 child: ElevatedButton.icon(
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.all(16),
-                    backgroundColor: Colors.green.shade50,
-                    foregroundColor: Colors.green.shade900,
+                    backgroundColor: AppColors.accent.withOpacity(0.3),
+                    foregroundColor: AppColors.primary,
                     minimumSize: const Size(300, 50),
                   ),
                   icon: Text(
@@ -390,39 +328,26 @@ class _ChatbotPageState extends State<ChatbotPage> {
           maxWidth: MediaQuery.of(context).size.width * 0.75,
         ),
         decoration: BoxDecoration(
-          gradient: isUser
-              ? LinearGradient(
-                  colors: [Colors.blue.shade300, Colors.blue.shade500],
-                )
-              : LinearGradient(
-                  colors: [Colors.green.shade300, Colors.green.shade500],
-                ),
+          color: isUser ? AppColors.secondary : AppColors.primary,
           borderRadius: BorderRadius.only(
             topLeft: const Radius.circular(20),
             topRight: const Radius.circular(20),
             bottomLeft: isUser ? const Radius.circular(20) : Radius.zero,
             bottomRight: isUser ? Radius.zero : const Radius.circular(20),
           ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.1),
-              blurRadius: 5,
-              offset: const Offset(0, 2),
-            ),
-          ],
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               msg["text"]!,
-              style: const TextStyle(color: Colors.white, fontSize: 15),
+              style: TextStyle(color: AppColors.accent, fontSize: 15),
             ),
             const SizedBox(height: 4),
             Text(
               _formatTime(msg["timestamp"]),
               style: TextStyle(
-                color: Colors.white.withOpacity(0.7),
+                color: AppColors.accent.withOpacity(0.7),
                 fontSize: 11,
               ),
             ),
@@ -452,16 +377,12 @@ class _ChatbotPageState extends State<ChatbotPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: List.generate(
                   3,
-                  (index) => AnimatedOpacity(
-                    opacity: 1.0,
-                    duration: Duration(milliseconds: 300 * (index + 1)),
-                    child: Container(
-                      width: 8,
-                      height: 8,
-                      decoration: BoxDecoration(
-                        color: Colors.green,
-                        shape: BoxShape.circle,
-                      ),
+                  (index) => Container(
+                    width: 8,
+                    height: 8,
+                    decoration: BoxDecoration(
+                      color: AppColors.primary,
+                      shape: BoxShape.circle,
                     ),
                   ),
                 ),

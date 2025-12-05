@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
+import '../config/colors/colors.dart';
 
 class VisionComputerPage extends StatefulWidget {
   const VisionComputerPage({super.key});
@@ -73,7 +74,6 @@ class _VisionComputerPageState extends State<VisionComputerPage> {
           showCNNProcess = true;
         });
 
-        // Simulation du processus CNN avec étapes visibles
         await simulateCNNProcess();
 
         if (!mounted) return;
@@ -81,66 +81,61 @@ class _VisionComputerPageState extends State<VisionComputerPage> {
           showLoader = false;
           showResult = true;
           resultCategory = "Image personnalisée";
-          resultText =
-              "L'IA a analysé votre image ! Essayez de trier correctement vos déchets 🌿";
+          resultText = "L'IA a analysé votre image";
         });
       }
     } catch (e) {
-      debugPrint('Erreur lors de la sélection : $e');
+      debugPrint('Erreur: $e');
     }
   }
 
   Future<void> simulateCNNProcess() async {
     setState(() => cnnSteps = []);
 
-    // Étape 1: Prétraitement
     await Future.delayed(const Duration(milliseconds: 500));
     if (!mounted) return;
     setState(() {
       cnnSteps.add({
-        "title": "1️⃣ Prétraitement",
-        "description": "Redimensionnement et normalisation de l'image",
+        "title": "Prétraitement",
+        "description": "Ajustement de l'image",
         "icon": Icons.crop,
-        "color": Colors.blue,
+        "color": AppColors.primary,
         "done": true,
       });
     });
 
-    // Étape 2: Convolution
     await Future.delayed(const Duration(milliseconds: 800));
     if (!mounted) return;
     setState(() {
       cnnSteps.add({
-        "title": "2️⃣ Couches de Convolution",
-        "description": "Détection des contours, textures et motifs",
+        "title": "Convolution",
+        "description": "Détection des formes",
         "icon": Icons.grid_on,
-        "color": Colors.purple,
+        "color": AppColors.secondary,
         "done": true,
       });
     });
 
-    // Étape 3: Pooling
     await Future.delayed(const Duration(milliseconds: 700));
     if (!mounted) return;
     setState(() {
       cnnSteps.add({
-        "title": "3️⃣ Pooling",
-        "description": "Réduction de la taille des données",
+        "title": "Pooling",
+        "description": "Réduction des données",
         "icon": Icons.compress,
-        "color": Colors.orange,
+        "color": AppColors.highlightColor,
         "done": true,
       });
     });
 
-    // Étape 4: Classification
     await Future.delayed(const Duration(milliseconds: 1000));
     if (!mounted) return;
     setState(() {
       cnnSteps.add({
-        "title": "4️⃣ Réseau Dense",
-        "description": "Classification finale de l'image",
+        "title": "Classification",
+        "description": "Résultat final",
         "icon": Icons.psychology,
-        "color": Colors.green,
+        "color": AppColors.secondary,
         "done": true,
       });
     });
@@ -157,7 +152,6 @@ class _VisionComputerPageState extends State<VisionComputerPage> {
       showCNNProcess = true;
     });
 
-    // Simulation du processus CNN
     await simulateCNNProcess();
 
     if (!mounted) return;
@@ -167,21 +161,19 @@ class _VisionComputerPageState extends State<VisionComputerPage> {
       resultCategory = imageData["category"]!;
       switch (resultCategory) {
         case "Plastique":
-          resultText =
-              "Recycler une bouteille plastique permet de réduire la pollution dans les océans 🌊.";
+          resultText = "Recycler le plastique réduit la pollution";
           break;
         case "Carton":
-          resultText = "Recycler le carton aide à préserver les arbres 🌳.";
+          resultText = "Le carton recyclé préserve les arbres";
           break;
         case "Compost":
-          resultText = "Composter les déchets organiques enrichit le sol 🍂.";
+          resultText = "Le compost enrichit le sol naturellement";
           break;
         case "Électronique":
-          resultText =
-              "Recycler les appareils électroniques évite la pollution chimique ⚡.";
+          resultText = "Recycler l'électronique évite la pollution";
           break;
         default:
-          resultText = "Action durable à appliquer ! 🌿";
+          resultText = "Action durable détectée";
       }
     });
   }
@@ -203,9 +195,11 @@ class _VisionComputerPageState extends State<VisionComputerPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Vision par ordinateur CNN 🌿"),
-        backgroundColor: Colors.green,
+        title: const Text("Vision par ordinateur"),
+        backgroundColor: AppColors.primary,
+        foregroundColor: AppColors.accent,
       ),
+      backgroundColor: AppColors.background,
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: showIntro
@@ -219,29 +213,23 @@ class _VisionComputerPageState extends State<VisionComputerPage> {
     );
   }
 
-  // Phase 1: Introduction
   Widget buildIntro() {
     return Column(
       children: [
         Expanded(
           child: Center(
             child: DefaultTextStyle(
-              style: const TextStyle(
-                fontSize: 18.0,
+              style: TextStyle(
+                fontSize: 20.0,
                 fontWeight: FontWeight.bold,
-                color: Colors.green,
+                color: AppColors.primary,
               ),
+              textAlign: TextAlign.center,
               child: AnimatedTextKit(
                 animatedTexts: [
-                  TyperAnimatedText(
-                    "Bienvenue dans la Vision par ordinateur 🌿 !",
-                  ),
-                  TyperAnimatedText(
-                    "L'IA utilise des réseaux de neurones convolutifs (CNN).",
-                  ),
-                  TyperAnimatedText(
-                    "Découvre comment le CNN analyse les images ! 🤖",
-                  ),
+                  TyperAnimatedText("Vision par ordinateur"),
+                  TyperAnimatedText("L'IA reconnaît les images avec le CNN"),
+                  TyperAnimatedText("Découvre comment ça marche"),
                 ],
                 isRepeatingAnimation: false,
               ),
@@ -250,120 +238,90 @@ class _VisionComputerPageState extends State<VisionComputerPage> {
         ),
         ElevatedButton(
           onPressed: skipIntro,
-          style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
-          child: const Text("Découvrir le CNN"),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: AppColors.buttonColor,
+            foregroundColor: AppColors.buttonTextColor,
+            padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+          ),
+          child: const Text("Commencer", style: TextStyle(fontSize: 16)),
         ),
         const SizedBox(height: 24),
       ],
     );
   }
 
-  // Phase 2: Explication du CNN
   Widget buildCNNExplanation() {
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Titre
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: Colors.green.shade50,
+              color: AppColors.accent.withOpacity(0.2),
               borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: Colors.green, width: 2),
+              border: Border.all(color: AppColors.primary, width: 2),
             ),
-            child: const Column(
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "🧠 Qu'est-ce qu'un CNN ?",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-                SizedBox(height: 8),
-                Text(
-                  "Un Réseau de Neurones Convolutif (CNN) est une IA spécialisée dans l'analyse d'images.",
-                  style: TextStyle(fontSize: 14),
-                ),
-              ],
-            ),
-          ),
-
-          const SizedBox(height: 20),
-
-          // Architecture du CNN
-          buildCNNLayer(
-            "📥 Entrée - Image",
-            "L'image est divisée en pixels (valeurs RGB)",
-            Icons.image,
-            Colors.blue,
-          ),
-          const Icon(Icons.arrow_downward, color: Colors.grey),
-          buildCNNLayer(
-            "🔍 Couches de Convolution",
-            "Des filtres détectent les contours, formes et textures.\n"
-                "Exemple: détection des bords d'une bouteille",
-            Icons.grid_on,
-            Colors.purple,
-          ),
-          const Icon(Icons.arrow_downward, color: Colors.grey),
-          buildCNNLayer(
-            "📊 Pooling (Sous-échantillonnage)",
-            "Réduit la taille des données tout en gardant l'essentiel.\n"
-                "Permet de réduire le temps de calcul",
-            Icons.compress,
-            Colors.orange,
-          ),
-          const Icon(Icons.arrow_downward, color: Colors.grey),
-          buildCNNLayer(
-            "🧮 Couches Denses",
-            "Combine toutes les informations pour classifier.\n"
-                "Décide si c'est du plastique, carton, etc.",
-            Icons.psychology,
-            Colors.green,
-          ),
-          const Icon(Icons.arrow_downward, color: Colors.grey),
-          buildCNNLayer(
-            "✅ Sortie - Prédiction",
-            "Résultat final avec un pourcentage de confiance",
-            Icons.check_circle,
-            Colors.teal,
-          ),
-
-          const SizedBox(height: 20),
-
-          // Info supplémentaire
-          Container(
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: Colors.amber.shade50,
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: Colors.amber, width: 2),
-            ),
-            child: const Row(
-              children: [
-                Icon(Icons.lightbulb, color: Colors.amber, size: 40),
-                SizedBox(width: 12),
-                Expanded(
-                  child: Text(
-                    "💡 Les CNN apprennent automatiquement les caractéristiques importantes d'une image, sans programmation manuelle !",
-                    style: TextStyle(fontSize: 14, fontStyle: FontStyle.italic),
+                  "Qu'est-ce qu'un CNN ?",
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.primary,
                   ),
                 ),
+                const SizedBox(height: 8),
+                Text(
+                  "Un réseau de neurones qui analyse les images",
+                  style: TextStyle(fontSize: 14, color: AppColors.primary),
+                ),
               ],
             ),
+          ),
+
+          const SizedBox(height: 20),
+
+          buildCNNLayer(
+            "Entrée",
+            "L'image est divisée en pixels",
+            Icons.image,
+            AppColors.primary,
+          ),
+          Icon(Icons.arrow_downward, color: AppColors.primary.withOpacity(0.5)),
+          buildCNNLayer(
+            "Convolution",
+            "Détection des contours et formes",
+            Icons.grid_on,
+            AppColors.secondary,
+          ),
+          Icon(Icons.arrow_downward, color: AppColors.primary.withOpacity(0.5)),
+          buildCNNLayer(
+            "Pooling",
+            "Réduction de la taille",
+            Icons.compress,
+            AppColors.highlightColor,
+          ),
+          Icon(Icons.arrow_downward, color: AppColors.primary.withOpacity(0.5)),
+          buildCNNLayer(
+            "Classification",
+            "Résultat final",
+            Icons.psychology,
+            AppColors.secondary,
           ),
 
           const SizedBox(height: 30),
 
-          // Bouton pour commencer
           Center(
             child: ElevatedButton.icon(
               onPressed: startImageSelection,
               icon: const Icon(Icons.play_arrow),
-              label: const Text("Tester le CNN !"),
+              label: const Text("Tester le CNN"),
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green,
-                foregroundColor: Colors.white,
+                backgroundColor: AppColors.buttonColor,
+                foregroundColor: AppColors.buttonTextColor,
                 padding: const EdgeInsets.symmetric(
                   horizontal: 32,
                   vertical: 16,
@@ -401,15 +359,19 @@ class _VisionComputerPageState extends State<VisionComputerPage> {
                 children: [
                   Text(
                     title,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
+                      color: AppColors.primary,
                     ),
                   ),
                   const SizedBox(height: 4),
                   Text(
                     description,
-                    style: TextStyle(fontSize: 13, color: Colors.grey.shade700),
+                    style: TextStyle(
+                      fontSize: 13,
+                      color: AppColors.primary.withOpacity(0.7),
+                    ),
                   ),
                 ],
               ),
@@ -420,27 +382,16 @@ class _VisionComputerPageState extends State<VisionComputerPage> {
     );
   }
 
-  // Phase 3: Sélection d'image
   Widget buildImageSelection() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          "Choisis une image pour que le CNN la classe :",
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 8),
-        const Text(
-          "Classes disponibles : Plastique, Carton, Compost, Électronique",
-          style: TextStyle(fontSize: 14, color: Colors.grey),
-        ),
-        const SizedBox(height: 4),
-        const Text(
-          "Choisis l'une de ces images ou importe ta propre image 📸",
+        Text(
+          "Choisis une image à analyser",
           style: TextStyle(
-            fontSize: 14,
-            fontStyle: FontStyle.italic,
-            color: Colors.green,
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: AppColors.primary,
           ),
         ),
         const SizedBox(height: 16),
@@ -460,7 +411,7 @@ class _VisionComputerPageState extends State<VisionComputerPage> {
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(16),
-                    border: Border.all(color: Colors.green, width: 2),
+                    border: Border.all(color: AppColors.primary, width: 2),
                   ),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(14),
@@ -470,12 +421,11 @@ class _VisionComputerPageState extends State<VisionComputerPage> {
                       cacheWidth: 300,
                       cacheHeight: 300,
                       errorBuilder: (context, error, stackTrace) {
-                        debugPrint('Error: $error');
-                        return const Center(
+                        return Center(
                           child: Icon(
                             Icons.broken_image,
                             size: 50,
-                            color: Colors.red,
+                            color: AppColors.primary,
                           ),
                         );
                       },
@@ -493,8 +443,8 @@ class _VisionComputerPageState extends State<VisionComputerPage> {
             icon: const Icon(Icons.photo_library),
             label: const Text("Importer une image"),
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.blue,
-              foregroundColor: Colors.white,
+              backgroundColor: AppColors.secondary,
+              foregroundColor: AppColors.accent,
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
             ),
           ),
@@ -504,7 +454,6 @@ class _VisionComputerPageState extends State<VisionComputerPage> {
     );
   }
 
-  // Phase 4: Vue des résultats
   Widget buildResultView() {
     return SingleChildScrollView(
       child: Column(
@@ -514,14 +463,7 @@ class _VisionComputerPageState extends State<VisionComputerPage> {
             width: double.infinity,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: Colors.green, width: 3),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.green.withOpacity(0.3),
-                  blurRadius: 15,
-                  spreadRadius: 5,
-                ),
-              ],
+              border: Border.all(color: AppColors.primary, width: 3),
             ),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(13),
@@ -537,11 +479,14 @@ class _VisionComputerPageState extends State<VisionComputerPage> {
           ),
           const SizedBox(height: 32),
 
-          // Processus CNN visible
           if (showCNNProcess && cnnSteps.isNotEmpty) ...[
-            const Text(
-              "🔍 Processus CNN en cours :",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            Text(
+              "Processus CNN",
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: AppColors.primary,
+              ),
             ),
             const SizedBox(height: 12),
             ...cnnSteps.map((step) => buildCNNStepCard(step)).toList(),
@@ -549,25 +494,24 @@ class _VisionComputerPageState extends State<VisionComputerPage> {
           ],
 
           if (showLoader)
-            const Column(
+            Column(
               children: [
                 SizedBox(
                   width: 60,
                   height: 60,
                   child: CircularProgressIndicator(
-                    color: Colors.green,
+                    color: AppColors.primary,
                     strokeWidth: 5,
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Text(
-                  "Le CNN analyse l'image...",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-                SizedBox(height: 8),
-                Text(
-                  "Traitement des couches neuronales... 🧠",
-                  style: TextStyle(fontSize: 14, color: Colors.grey),
+                  "Analyse en cours...",
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.primary,
+                  ),
                 ),
               ],
             ),
@@ -577,35 +521,41 @@ class _VisionComputerPageState extends State<VisionComputerPage> {
                 Container(
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: Colors.green.shade50,
+                    color: AppColors.accent.withOpacity(0.2),
                     borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: Colors.green, width: 2),
+                    border: Border.all(color: AppColors.primary, width: 2),
                   ),
                   child: Column(
                     children: [
-                      const Icon(
+                      Icon(
                         Icons.check_circle,
-                        color: Colors.green,
+                        color: AppColors.primary,
                         size: 48,
                       ),
                       const SizedBox(height: 12),
                       Text(
-                        "Catégorie : $resultCategory",
-                        style: const TextStyle(
+                        "Catégorie: $resultCategory",
+                        style: TextStyle(
                           fontSize: 22,
                           fontWeight: FontWeight.bold,
-                          color: Colors.green,
+                          color: AppColors.primary,
                         ),
                       ),
                       const SizedBox(height: 8),
-                      const Text(
-                        "Confiance : 94.7%",
-                        style: TextStyle(fontSize: 16, color: Colors.grey),
+                      Text(
+                        "Confiance: 94.7%",
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: AppColors.primary.withOpacity(0.7),
+                        ),
                       ),
                       const SizedBox(height: 16),
                       Text(
                         resultText,
-                        style: const TextStyle(fontSize: 16),
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: AppColors.primary,
+                        ),
                         textAlign: TextAlign.center,
                       ),
                     ],
@@ -617,8 +567,8 @@ class _VisionComputerPageState extends State<VisionComputerPage> {
                   icon: const Icon(Icons.refresh),
                   label: const Text("Nouvelle analyse"),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
-                    foregroundColor: Colors.white,
+                    backgroundColor: AppColors.buttonColor,
+                    foregroundColor: AppColors.buttonTextColor,
                     padding: const EdgeInsets.symmetric(
                       horizontal: 32,
                       vertical: 16,
@@ -640,22 +590,17 @@ class _VisionComputerPageState extends State<VisionComputerPage> {
         child: ListTile(
           leading: CircleAvatar(
             backgroundColor: (step["color"] as Color).withOpacity(0.2),
-            child: step["done"]
-                ? Icon(Icons.check, color: step["color"])
-                : Icon(step["icon"], color: step["color"]),
+            child: Icon(step["icon"], color: step["color"]),
           ),
           title: Text(
             step["title"],
-            style: const TextStyle(fontWeight: FontWeight.w600),
+            style: TextStyle(
+              fontWeight: FontWeight.w600,
+              color: AppColors.primary,
+            ),
           ),
           subtitle: Text(step["description"]),
-          trailing: step["done"]
-              ? const Icon(Icons.check_circle, color: Colors.green)
-              : const SizedBox(
-                  width: 20,
-                  height: 20,
-                  child: CircularProgressIndicator(strokeWidth: 2),
-                ),
+          trailing: Icon(Icons.check_circle, color: AppColors.secondary),
         ),
       ),
     );

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'dart:math';
+import '../config/colors/colors.dart';
 
 class AgriculturePage extends StatefulWidget {
   const AgriculturePage({super.key});
@@ -14,13 +14,13 @@ class _AgriculturePageState extends State<AgriculturePage> {
   bool showExplanation = false;
   bool showPrediction = false;
 
-  // Paramètres pour la prédiction
   double temperature = 20.0;
   double humidity = 50.0;
   double rainfall = 100.0;
   String soilType = "Argileux";
 
   String? predictedCrop;
+  String? cropEmoji;
   double? confidence;
   List<Map<String, dynamic>> steps = [];
 
@@ -42,49 +42,52 @@ class _AgriculturePageState extends State<AgriculturePage> {
 
   void makePrediction() {
     setState(() {
-      // Simulation du processus de décision de l'IA
       steps = [
         {
-          "step": "1. Analyse de la température",
+          "step": "Température",
           "value": "${temperature.toInt()}°C",
           "icon": Icons.thermostat,
-          "color": temperature > 25 ? Colors.orange : Colors.blue,
+          "color": AppColors.primary,
         },
         {
-          "step": "2. Vérification de l'humidité",
+          "step": "Humidité",
           "value": "${humidity.toInt()}%",
           "icon": Icons.water_drop,
-          "color": humidity > 60 ? Colors.blue : Colors.brown,
+          "color": AppColors.secondary,
         },
         {
-          "step": "3. Évaluation des précipitations",
+          "step": "Précipitations",
           "value": "${rainfall.toInt()} mm",
           "icon": Icons.cloud,
-          "color": rainfall > 150 ? Colors.indigo : Colors.grey,
+          "color": AppColors.highlightColor,
         },
         {
-          "step": "4. Type de sol",
+          "step": "Type de sol",
           "value": soilType,
           "icon": Icons.grass,
-          "color": Colors.green,
+          "color": AppColors.primary,
         },
       ];
 
-      // Logique de prédiction simple
       if (temperature > 25 && humidity > 60 && rainfall > 150) {
-        predictedCrop = "Riz 🌾";
+        predictedCrop = "Riz";
+        cropEmoji = "🌾";
         confidence = 92.5;
       } else if (temperature < 20 && humidity < 50) {
-        predictedCrop = "Blé 🌾";
+        predictedCrop = "Blé";
+        cropEmoji = "🌾";
         confidence = 88.3;
       } else if (soilType == "Sableux" && rainfall < 100) {
-        predictedCrop = "Arachide 🥜";
+        predictedCrop = "Arachide";
+        cropEmoji = "🥜";
         confidence = 85.0;
       } else if (temperature > 20 && rainfall > 100) {
-        predictedCrop = "Maïs 🌽";
+        predictedCrop = "Maïs";
+        cropEmoji = "🌽";
         confidence = 90.2;
       } else {
-        predictedCrop = "Tomate 🍅";
+        predictedCrop = "Tomate";
+        cropEmoji = "🍅";
         confidence = 78.5;
       }
     });
@@ -97,6 +100,7 @@ class _AgriculturePageState extends State<AgriculturePage> {
       rainfall = 100.0;
       soilType = "Argileux";
       predictedCrop = null;
+      cropEmoji = null;
       confidence = null;
       steps = [];
     });
@@ -106,9 +110,11 @@ class _AgriculturePageState extends State<AgriculturePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Prédiction - Agriculture 🌾"),
-        backgroundColor: Colors.green,
+        title: const Text("Prédiction Agricole"),
+        backgroundColor: AppColors.primary,
+        foregroundColor: AppColors.accent,
       ),
+      backgroundColor: AppColors.background,
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: showIntro
@@ -120,29 +126,23 @@ class _AgriculturePageState extends State<AgriculturePage> {
     );
   }
 
-  // Phase 1: Introduction
   Widget buildIntro() {
     return Column(
       children: [
         Expanded(
           child: Center(
             child: DefaultTextStyle(
-              style: const TextStyle(
-                fontSize: 18.0,
+              style: TextStyle(
+                fontSize: 20.0,
                 fontWeight: FontWeight.bold,
-                color: Colors.green,
+                color: AppColors.primary,
               ),
+              textAlign: TextAlign.center,
               child: AnimatedTextKit(
                 animatedTexts: [
-                  TyperAnimatedText(
-                    "Bienvenue dans l'agriculture intelligente 🌾 !",
-                  ),
-                  TyperAnimatedText(
-                    "L'IA va prédire la meilleure culture pour ton terrain.",
-                  ),
-                  TyperAnimatedText(
-                    "Découvre comment l'IA analyse les données pour décider ! 🤖",
-                  ),
+                  TyperAnimatedText("Prédiction Agricole"),
+                  TyperAnimatedText("L'IA prédit la meilleure culture"),
+                  TyperAnimatedText("Selon la météo et le sol"),
                 ],
                 isRepeatingAnimation: false,
               ),
@@ -151,107 +151,87 @@ class _AgriculturePageState extends State<AgriculturePage> {
         ),
         ElevatedButton(
           onPressed: skipIntro,
-          style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
-          child: const Text("Découvrir comment ça marche"),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: AppColors.buttonColor,
+            foregroundColor: AppColors.buttonTextColor,
+            padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+          ),
+          child: const Text("Commencer", style: TextStyle(fontSize: 16)),
         ),
         const SizedBox(height: 24),
       ],
     );
   }
 
-  // Phase 2: Explication du processus
   Widget buildExplanation() {
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Titre
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: Colors.green.shade50,
+              color: AppColors.accent.withOpacity(0.2),
               borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: Colors.green, width: 2),
+              border: Border.all(color: AppColors.primary, width: 2),
             ),
-            child: const Column(
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "🤖 Comment l'IA fait-elle des prédictions ?",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-                SizedBox(height: 8),
-                Text(
-                  "L'intelligence artificielle analyse plusieurs facteurs pour prendre une décision.",
-                  style: TextStyle(fontSize: 14),
-                ),
-              ],
-            ),
-          ),
-
-          const SizedBox(height: 20),
-
-          // Étapes du processus
-          buildExplanationStep(
-            "1️⃣ Collecte des données",
-            "L'IA rassemble des informations comme la température, l'humidité, les précipitations et le type de sol.",
-            Icons.dataset,
-            Colors.blue,
-          ),
-          buildExplanationStep(
-            "2️⃣ Analyse des patterns",
-            "Elle compare ces données avec des milliers d'exemples historiques de cultures réussies.",
-            Icons.analytics,
-            Colors.purple,
-          ),
-          buildExplanationStep(
-            "3️⃣ Calcul de probabilité",
-            "L'IA calcule quelle culture a le plus de chances de réussir dans ces conditions.",
-            Icons.calculate,
-            Colors.orange,
-          ),
-          buildExplanationStep(
-            "4️⃣ Recommandation",
-            "Elle propose la meilleure culture avec un score de confiance (en %).",
-            Icons.recommend,
-            Colors.green,
-          ),
-
-          const SizedBox(height: 20),
-
-          // Illustration
-          Container(
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: Colors.amber.shade50,
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: Colors.amber, width: 2),
-            ),
-            child: Row(
-              children: [
-                const Icon(Icons.lightbulb, color: Colors.amber, size: 40),
-                const SizedBox(width: 12),
-                const Expanded(
-                  child: Text(
-                    "💡 L'IA ne devine pas ! Elle utilise des modèles mathématiques entraînés sur des données réelles.",
-                    style: TextStyle(fontSize: 14, fontStyle: FontStyle.italic),
+                  "Comment ça marche ?",
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.primary,
                   ),
                 ),
+                const SizedBox(height: 8),
+                Text(
+                  "L'IA analyse plusieurs facteurs pour décider",
+                  style: TextStyle(fontSize: 14, color: AppColors.primary),
+                ),
               ],
             ),
+          ),
+
+          const SizedBox(height: 20),
+
+          buildExplanationStep(
+            "Collecte des données",
+            "Température, humidité, pluie, type de sol",
+            Icons.dataset,
+            AppColors.primary,
+          ),
+          buildExplanationStep(
+            "Analyse des patterns",
+            "Compare avec des exemples historiques",
+            Icons.analytics,
+            AppColors.secondary,
+          ),
+          buildExplanationStep(
+            "Calcul de probabilité",
+            "Quelle culture a le plus de chances",
+            Icons.calculate,
+            AppColors.highlightColor,
+          ),
+          buildExplanationStep(
+            "Recommandation",
+            "Propose la meilleure culture",
+            Icons.recommend,
+            AppColors.primary,
           ),
 
           const SizedBox(height: 30),
 
-          // Bouton pour commencer
           Center(
             child: ElevatedButton.icon(
               onPressed: startPrediction,
               icon: const Icon(Icons.play_arrow),
-              label: const Text("Essayer la prédiction !"),
+              label: const Text("Tester"),
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green,
-                foregroundColor: Colors.white,
+                backgroundColor: AppColors.buttonColor,
+                foregroundColor: AppColors.buttonTextColor,
                 padding: const EdgeInsets.symmetric(
                   horizontal: 32,
                   vertical: 16,
@@ -288,15 +268,19 @@ class _AgriculturePageState extends State<AgriculturePage> {
                 children: [
                   Text(
                     title,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
+                      color: AppColors.primary,
                     ),
                   ),
                   const SizedBox(height: 4),
                   Text(
                     description,
-                    style: TextStyle(fontSize: 13, color: Colors.grey.shade700),
+                    style: TextStyle(
+                      fontSize: 13,
+                      color: AppColors.primary.withOpacity(0.7),
+                    ),
                   ),
                 ],
               ),
@@ -307,21 +291,23 @@ class _AgriculturePageState extends State<AgriculturePage> {
     );
   }
 
-  // Phase 3: Interface de prédiction
   Widget buildPredictionInterface() {
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            "🌾 Configure les paramètres de ton terrain :",
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          Text(
+            "Configure ton terrain",
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: AppColors.primary,
+            ),
           ),
           const SizedBox(height: 20),
 
-          // Température
           buildSlider(
-            label: "🌡️ Température",
+            label: "Température",
             value: temperature,
             min: 0,
             max: 40,
@@ -329,9 +315,8 @@ class _AgriculturePageState extends State<AgriculturePage> {
             onChanged: (val) => setState(() => temperature = val),
           ),
 
-          // Humidité
           buildSlider(
-            label: "💧 Humidité",
+            label: "Humidité",
             value: humidity,
             min: 0,
             max: 100,
@@ -339,9 +324,8 @@ class _AgriculturePageState extends State<AgriculturePage> {
             onChanged: (val) => setState(() => humidity = val),
           ),
 
-          // Précipitations
           buildSlider(
-            label: "☔ Précipitations annuelles",
+            label: "Précipitations",
             value: rainfall,
             min: 0,
             max: 300,
@@ -349,10 +333,13 @@ class _AgriculturePageState extends State<AgriculturePage> {
             onChanged: (val) => setState(() => rainfall = val),
           ),
 
-          // Type de sol
-          const Text(
-            "🌱 Type de sol :",
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+          Text(
+            "Type de sol",
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+              color: AppColors.primary,
+            ),
           ),
           const SizedBox(height: 8),
           Wrap(
@@ -364,22 +351,26 @@ class _AgriculturePageState extends State<AgriculturePage> {
                 onSelected: (selected) {
                   if (selected) setState(() => soilType = type);
                 },
-                selectedColor: Colors.green,
+                selectedColor: AppColors.secondary,
+                labelStyle: TextStyle(
+                  color: soilType == type
+                      ? AppColors.accent
+                      : AppColors.primary,
+                ),
               );
             }).toList(),
           ),
 
           const SizedBox(height: 30),
 
-          // Bouton de prédiction
           Center(
             child: ElevatedButton.icon(
               onPressed: makePrediction,
               icon: const Icon(Icons.psychology),
-              label: const Text("Lancer la prédiction"),
+              label: const Text("Prédire"),
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green,
-                foregroundColor: Colors.white,
+                backgroundColor: AppColors.buttonColor,
+                foregroundColor: AppColors.buttonTextColor,
                 padding: const EdgeInsets.symmetric(
                   horizontal: 32,
                   vertical: 16,
@@ -390,48 +381,42 @@ class _AgriculturePageState extends State<AgriculturePage> {
 
           const SizedBox(height: 30),
 
-          // Affichage du processus
           if (steps.isNotEmpty) ...[
-            const Text(
-              "🔍 Processus de décision de l'IA :",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            Text(
+              "Analyse en cours",
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: AppColors.primary,
+              ),
             ),
             const SizedBox(height: 12),
             ...steps.map((step) => buildStepCard(step)).toList(),
           ],
 
-          // Résultat
           if (predictedCrop != null) ...[
             const SizedBox(height: 20),
-            AnimatedContainer(
-              duration: const Duration(milliseconds: 600),
+            Container(
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [Colors.green.shade300, Colors.green.shade600],
-                ),
+                color: AppColors.secondary.withOpacity(0.2),
                 borderRadius: BorderRadius.circular(16),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.green.withOpacity(0.4),
-                    blurRadius: 15,
-                    spreadRadius: 2,
-                  ),
-                ],
+                border: Border.all(color: AppColors.primary, width: 2),
               ),
               child: Column(
                 children: [
-                  const Icon(Icons.check_circle, color: Colors.white, size: 60),
+                  // Emoji grand
+                  Text(cropEmoji!, style: const TextStyle(fontSize: 80)),
                   const SizedBox(height: 12),
-                  const Text(
-                    "Culture recommandée :",
-                    style: TextStyle(color: Colors.white, fontSize: 16),
+                  Text(
+                    "Culture recommandée",
+                    style: TextStyle(color: AppColors.primary, fontSize: 16),
                   ),
                   const SizedBox(height: 8),
                   Text(
                     predictedCrop!,
-                    style: const TextStyle(
-                      color: Colors.white,
+                    style: TextStyle(
+                      color: AppColors.primary,
                       fontSize: 32,
                       fontWeight: FontWeight.bold,
                     ),
@@ -443,13 +428,13 @@ class _AgriculturePageState extends State<AgriculturePage> {
                       vertical: 8,
                     ),
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: AppColors.accent,
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Text(
                       "Confiance: ${confidence!.toStringAsFixed(1)}%",
                       style: TextStyle(
-                        color: Colors.green.shade700,
+                        color: AppColors.primary,
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
                       ),
@@ -464,7 +449,10 @@ class _AgriculturePageState extends State<AgriculturePage> {
                 onPressed: resetPrediction,
                 icon: const Icon(Icons.refresh),
                 label: const Text("Nouvelle prédiction"),
-                style: ElevatedButton.styleFrom(backgroundColor: Colors.orange),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.secondary,
+                  foregroundColor: AppColors.accent,
+                ),
               ),
             ),
           ],
@@ -486,14 +474,18 @@ class _AgriculturePageState extends State<AgriculturePage> {
       children: [
         Text(
           "$label: ${value.toInt()} $unit",
-          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+            color: AppColors.primary,
+          ),
         ),
         Slider(
           value: value,
           min: min,
           max: max,
           divisions: (max - min).toInt(),
-          activeColor: Colors.green,
+          activeColor: AppColors.primary,
           onChanged: onChanged,
         ),
         const SizedBox(height: 12),
@@ -511,7 +503,10 @@ class _AgriculturePageState extends State<AgriculturePage> {
         ),
         title: Text(
           step["step"],
-          style: const TextStyle(fontWeight: FontWeight.w600),
+          style: TextStyle(
+            fontWeight: FontWeight.w600,
+            color: AppColors.primary,
+          ),
         ),
         trailing: Text(
           step["value"],
