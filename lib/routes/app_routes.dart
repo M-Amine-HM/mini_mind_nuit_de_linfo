@@ -22,7 +22,7 @@ class AppRoutes {
     concept: (context) => const ConceptPage(),
     chatbot: (context) => const ChatbotPage(),
     image: (context) => const VisionComputerPage(),
-    classification: (context) => const ClassificationPage(),
+    classification: (context) => const MLClassificationPage(),
     agriculture: (context) => const AgriculturePage(),
   };
 }
